@@ -1,8 +1,12 @@
-import { NextFunction, Request, Response } from 'express';
-import * as subscriptionRepository from '../repositories/subscriptionRepository';
-import webpush, { SendResult } from 'web-push';
+import { NextFunction, Request, Response } from "express";
+import * as subscriptionRepository from "../repositories/subscriptionRepository";
+import webpush, { SendResult } from "web-push";
 
-export const post = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+export const post = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
     const subscription = req.body;
 
@@ -18,7 +22,7 @@ export const post = async (req: Request, res: Response, next: NextFunction): Pro
 export const remove = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ): Promise<void> => {
   try {
     const endpoint: string = req.query.endpoint?.toString();
@@ -41,16 +45,18 @@ export const remove = async (
 export const broadcast = async (
   _req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ): Promise<void> => {
   try {
-    const notification = { title: 'Hey, this is a push notification!' };
+    const notification = { title: "Ca marche du feu de Dieu" };
 
     const subscriptions = await subscriptionRepository.getAll();
 
     const notifications: Promise<SendResult>[] = [];
     subscriptions.forEach((subscription) => {
-      notifications.push(webpush.sendNotification(subscription, JSON.stringify(notification)));
+      notifications.push(
+        webpush.sendNotification(subscription, JSON.stringify(notification))
+      );
     });
 
     await Promise.all(notifications);
