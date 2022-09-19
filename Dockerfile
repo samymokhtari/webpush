@@ -14,8 +14,16 @@ RUN npm install
 
 # Bundle app source
 COPY . .
-RUN node .
+RUN rm -rf dist,
+RUN mkdir -p dist/client
+COPY client/* dist/client
+RUN npm run clean
 
+RUN mkdir -p dist/client
+COPY client/* dist/client
+
+RUN  npm install -g typescript
+RUN npm run build
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD [ "node", "." ]
