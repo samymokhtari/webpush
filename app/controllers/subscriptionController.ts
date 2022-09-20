@@ -50,8 +50,6 @@ export const broadcast = async (
   try {
     const notification = {
       title: "Ca marche du feu de Dieu",
-      image:
-        "https://static.vecteezy.com/system/resources/previews/001/188/566/original/fire-png.png",
     };
 
     const subscriptions = await subscriptionRepository.getAll();
